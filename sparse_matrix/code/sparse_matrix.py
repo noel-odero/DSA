@@ -126,18 +126,25 @@ class SparseMatrix:
     def multiply(self, other):
         if self.cols != other.rows:
             raise ValueError(
-                "Number of columns in first matrix must be equal to number of rows in second matrix for multiplication")
+            "Number of columns in first matrix must be equal to number of rows in second matrix for multiplication"
+        )
+        
 
         result = SparseMatrix(self.rows, other.cols)
-        for i in range(self.rows):
+
+        for (i, k), val1 in self.data.items():  # Iterate only over nonzero elements
             for j in range(other.cols):
-                sum_val = 0
-                for k in range(self.cols):
-                    sum_val += self.get_element(i, k) * \
-                        other.get_element(k, j)
-                if sum_val != 0:
-                    result.set_element(i, j, sum_val)
+                val2 = other.get_element(k, j)
+                if val2 != 0:
+                    if (i, j) in result.data:
+                        result.data[(i, j)] += val1 * val2
+                    else:
+                        result.data[(i, j)] = val1 * val2
+
         return result
+
+    
+
 
     def __str__(self):
         matrix_str = ""
