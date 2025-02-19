@@ -7,7 +7,7 @@ sparse_matrix_four = '../sample_inputs/easy_sample_02_3.txt'
 # sparse_matrix_two = 'C:\Users\Hp\Documents\ALU\sparse_matrix\sample_inputs/matrixfile1.txt'
 
 def main():
-    import sys
+    
 
     operation = input("Enter operation (Add, Subtract, Multiply): ").strip().lower()
 
@@ -25,13 +25,13 @@ def main():
             result = matrix3.multiply(matrix4)
         else:
             print("Invalid operation. Please enter Add, Subtract, or Multiply.")
-            sys.exit(1)
+            return
 
         result.print_readable()
     
     except (FileNotFoundError, ValueError, IndexError) as e:
         print(f"Error: {e}")
-        sys.exit(1)
+        return
 
 if __name__ == "__main__":
     main()
